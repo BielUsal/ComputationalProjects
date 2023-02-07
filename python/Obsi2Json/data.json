@@ -1,0 +1,20 @@
+{
+  "moveIntoMath_toggle": true,
+  "autoCloseMath_toggle": true,
+  "autoCloseRound_toggle": true,
+  "autoCloseSquare_toggle": true,
+  "autoCloseCurly_toggle": true,
+  "addAlignBlock_toggle": true,
+  "addAlignBlock_parameter": "align*",
+  "addMatrixBlock_toggle": true,
+  "addMatrixBlock_parameter": "pmatrix",
+  "addCasesBlock_toggle": true,
+  "autoFraction_toggle": true,
+  "autoLargeBracket_toggle": true,
+  "autoSumLimit_toggle": true,
+  "autoEncloseSup_toggle": true,
+  "autoEncloseSub_toggle": true,
+  "encloseSelection_toggle": true,
+  "customShorthand_toggle": true,
+  "customShorthand_parameter": "bi:\\binom{#cursor}{#tab};\nsq:\\sqrt{};\nbb:\\mathbb{};\nbf:\\mathbf{};\nte:\\text{};\ninf:\\infty;\ncd:\\cdot;\nqu:\\quad;\nti:\\times;\nal:\\alpha;\nbe:\\beta;\nga:\\gamma;\nGa:\\Gamma;\nde:\\delta;\nDe:\\Delta;\nep:\\epsilon;\nze:\\zeta;\net:\\eta;\nth:\\theta;\nTh:\\Theta;\nio:\\iota;\nka:\\kappa;\nla:\\lambda;\nLa:\\Lambda;\nmu:\\mu;\nnu:\\nu;\nxi:\\xi;\nXi:\\Xi;\npi:\\pi;\nPi:\\Pi;\nrh:\\rho;\nsi:\\sigma;\nSi:\\Sigma;\nta:\\tau;\nup:\\upsilon;\nUp:\\Upsilon;\nph:\\phi;\nPh:\\Phi;\nch:\\chi;\nps:\\psi;\nPs:\\Psi;\nom:\\omega;\nOm:\\Omega;\nvp:\\varphi;\np1:\\frac{\\partial #cursor}{\\partial #tab} #tab;\ndi:\\dfrac{d #cursor}{d #tab} #tab;\nna:\\vec\\nabla;\nv:\\vec ;\np2:\\frac{\\partial^{2} #cursor}{\\partial #tab ^{2}} #tab;\nd2:\\dfrac{d^{2} #cursor }{d #tab ^{2}} #tab;\neiit:e^{-i \\omega t};\neit:e^{i \\omega t};\nei:e^{i #cursor} #tab;\neii:e^{-i #cursor} #tab;\nkp:\\ket{\\psi};\nbp:\\bra{\\psi};\nkpn:\\ket{\\psi_{n}};\nbpn:\\bra{\\psi_{n}};\nbk:\\braket{#cursor | #tab} #tab;\nbko:\\bra{\\psi}#cursor\\ket{\\psi};\nintinf:\\int_{-\\infty}^{\\infty} d#cursor #tab;\nham:\\mathcal{H};\nav:\\braket{#cursor}#tab;\nlag:\\mathcal{L} ;\ncurl:\\vec\\nabla\\times  #cursor;\ndiv:\\vec\\nabla\\cdot #cursor;\nlap:\\vec\\nabla^{2} #cursor;\npa:\\partial_{#cursor} #tab;\nkam:\\mathcal{K} #cursor;\nts:\\text{ } ;\nbo:\\boldsymbol{#cursor}#tab;\ndex:\\text{d};"
+}
