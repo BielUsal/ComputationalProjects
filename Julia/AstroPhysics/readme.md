@@ -1,4 +1,4 @@
-#Some-Body problems
+# Some-Body problems
 
-Here, we will be solving some $n=2,3$ body problems with initial parameters of real systems. They are pretty self-descriptive
+Here, we will be solving some $n=2,3$ body problems with initial parameters of real systems. They are documented in the Notebooks themselves
 
