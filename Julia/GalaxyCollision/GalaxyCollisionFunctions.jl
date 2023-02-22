@@ -1,3 +1,13 @@
+using LinearAlgebra
+using Unitful
+using UnitfulAstro
+using OrdinaryDiffEq
+using Plots
+using FLoops
+using Distributed
+#include("./GalaxyCollisionFunctions.jl")
+#addprocs(4)
+theme(:dracula)
 const G = 4.3009E-3 *1u"pc *(km/s)^2 /Msun"
 function format_parameters(galaxy_args)
     #I didn't have this at first, but this makes all galaxies have an uniform format. Not too crazy
