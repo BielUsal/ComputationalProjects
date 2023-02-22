@@ -13,7 +13,7 @@ function format_parameters(galaxy_args)
     #I didn't have this at first, but this makes all galaxies have an uniform format. Not too crazy
     return Dict(
         "mass" => galaxy_args[1]*1u"Msun",
-        "radius"     => galaxy_args[2]*1u"pc",
+        "radius"     => galaxy_args[2]*1u"kpc",
         "center_pos" => galaxy_args[3].*1u"kpc",
         "center_vel" => galaxy_args[4].*1u"km/s",
         "normal"     => galaxy_args[5],
@@ -42,7 +42,7 @@ function init_disk!(galaxy,dT=1E-4u"yr")
         else 
          u = normalize(u)
 
-        @show Rotation = [
+        Rotation = [
             u[1]*u[1]*(1-cosθ)+cosθ u[1]*u[2]*(1-cosθ)-u[2]*sinθ u[1]*u[3]*(1-cosθ)+u[1]*sinθ;
 
             u[2]*u[1]*(1-cosθ)+u[3]*sinθ u[2]*u[2]*(1-cosθ)+cosθ u[2]*u[3]*(1-cosθ)-u[1]*sinθ;
@@ -102,7 +102,7 @@ function evolve_disk(galaxy,dT=1e-4u"yr",N_steps=100000,frames=500)
     rₛ=galaxy["star_pos"]
     vₛ=galaxy["star_vel"]
 
-    function Gravity(dq,q,p,t) 
+    function Gravity(dq::Vector{Float64},q::Vector{Float64},m,t::Float64)::Vector{Float64}
         r = q[1:3]
         R = q[4:6]
         ddr = ustrip(u"m^3/s^2",G*M*1u"Msun")*(R-r)/max(norm(R-r),rₘ)^3
@@ -110,15 +110,13 @@ function evolve_disk(galaxy,dT=1e-4u"yr",N_steps=100000,frames=500)
         append!(ddr,ddR)
         return ddr
     end
-    Trolleg=[]
     Integrator=[]
     for i ∈ 1:Nₛ
         append!(vₛ[i],V₀)
         append!(rₛ[i],R₀)
     end
     for i ∈ 1:Nₛ
-        push!(Trolleg,SecondOrderODEProblem(Gravity,vₛ[i],rₛ[i],(0,dT*N_steps)))
-        push!(Integrator,init(Trolleg[i],dt=dT,McAte2()))
+        push!(Integrator,init(SecondOrderODEProblem(Gravity,vₛ[i],rₛ[i],(0,dT*N_steps)),dt=dT,McAte2()))
     end 
     snapshot = zeros(frames,Nₛ+1,3)
     time = zeros(frames)
@@ -136,7 +134,7 @@ function evolve_disk(galaxy,dT=1e-4u"yr",N_steps=100000,frames=500)
     return snapshot,time 
 end
 
-function gif_galaxy(data,time,xlimit=[0,0],ylimit=[0,0],zlimit=[0,0])
+function gif_galaxy(data,time,Nₛ,xlimit=[0,0],ylimit=[0,0],zlimit=[0,0])
     if ((norm(xlimit) == 0.0) || (norm(ylimit) == 0.0) || (norm(zlimit) == 0.0))
         xlimit = [minimum(data[:,:,1]),maximum(data[:,:,1])]
         ylimit = [minimum(data[:,:,2]),maximum(data[:,:,2])]
@@ -144,10 +142,93 @@ function gif_galaxy(data,time,xlimit=[0,0],ylimit=[0,0],zlimit=[0,0])
     end
     @gif for i ∈ 1:length(time)
         scatter3d(xlim=xlimit,ylim=ylimit,zlim=zlimit)
-        for j ∈ 1:Introoder["Nₛ"]
-            scatter3d!(data[i:i,j,1],data[i:i,j,2],data[i:i,j,3], color=:red,legends=false,markersize=0.5)
+        for j ∈ 1:Nₛ
+            scatter3d!(data[i:i,j,1],data[i:i,j,2],data[i:i,j,3], color=:red,legends=false,markersize=1.5)
            # i > trail ? plot3d!(Rotated[j][1,1:i],Rotated[j][2,1:i],Rotated[j][3,1:i]) : nothing
         end
-        scatter3d!(data[i:i,Introoder["Nₛ"]+1,1],data[i:i,Introoder["Nₛ"]+1,2],data[i:i,Introoder["Nₛ"]+1,3], color=:black,legends=false)
+        scatter3d!(data[i:i,Nₛ+1,1],data[i:i,Nₛ+1,2],data[i:i,Nₛ+1,3], color=:black,legends=false)
     end 
+end
+
+function gif_two_galaxies(data,time,N₁,N₂,xlimit=[0,0],ylimit=[0,0],zlimit=[0,0])
+    if ((norm(xlimit) == 0.0) || (norm(ylimit) == 0.0) || (norm(zlimit) == 0.0))
+        xlimit = [minimum(data[1:40,:,1]),maximum(data[1:40,:,1])]
+        ylimit = [minimum(data[1:40,:,2]),maximum(data[1:40,:,2])]
+        zlimit = [minimum(data[1:40,:,3]),maximum(data[1:40,:,3])]
+    end
+    @gif for i ∈ 1:length(time)
+        scatter3d(xlim=xlimit,ylim=ylimit,zlim=zlimit)
+        for j ∈ 1:N₁
+            scatter3d!(data[i:i,j,1],data[i:i,j,2],data[i:i,j,3], color=:red,legends=false,markersize=1.5)
+        end
+        for j ∈ 1:N₂
+            scatter3d!(data[i:i,N₁+j,1],data[i:i,N₁+j,2],data[i:i,N₁+j,3], color=:blue,legends=false,markersize=1.5)
+           # i > trail ? plot3d!(Rotated[j][1,1:i],Rotated[j][2,1:i],Rotated[j][3,1:i]) : nothing
+        end
+        scatter3d!(data[i:i,N₁+N₂+1,1],data[i:i,N₁+N₂+1,2],data[i:i,N₁+N₂+1,3], color=:black,legends=false)
+        scatter3d!(data[i:i,N₁+N₂+2,1],data[i:i,N₁+N₂+2,2],data[i:i,N₁+N₂+2,3], color=:black,legends=false)
+    end 
+end
+
+function evolve_two_disks(primary,secondary,dT=1e-4u"yr",N_steps=100000,frames=500)
+    #Integration stuff
+    divs = trunc(Int64,N_steps/frames)
+    dT=ustrip(u"s",dT)
+    r₁ₘ,r₂ₘ=ustrip(u"m",primary["softening"]*primary["radius"]),ustrip(u"m",secondary["softening"]*secondary["radius"])
+    N₁ₛ,N₂ₛ=primary["Nₛ"],secondary["Nₛ"]
+    
+    #Galaxy stuff
+    M = [ustrip(u"Msun",primary["mass"]),ustrip(u"Msun",secondary["mass"])]
+    R₁,R₂ = ustrip.(u"m",primary["center_pos"]),ustrip.(u"m",secondary["center_pos"])
+    V₁,V₂ = ustrip.(u"m/s",primary["center_vel"]),ustrip.(u"m/s",secondary["center_vel"])
+
+    #star stuff
+    r₁,r₂=primary["star_pos"],secondary["star_pos"]
+    v₁,v₂=primary["star_vel"], secondary["star_vel"]
+
+
+    function Gravitus(dq::Vector{Float64},q::Vector{Float64},m::Vector{Float64},t::Float64)::Vector{Float64}
+        pegnor= q[1:3]
+        R₁,R₂= q[4:6],q[7:9]
+        ddpegnor = ustrip(u"m^3/s^2",G*m[1]*1u"Msun")*(R₁-pegnor)/max(norm(R₁-pegnor),r₁ₘ)^3+ustrip(u"m^3/s^2",G*m[2]*1u"Msun")*(R₂-pegnor)/max(norm(R₂-pegnor),r₂ₘ)^3
+        ddR₁ = ustrip(u"m^3/s^2",G*m[1]*1u"Msun")*(R₂-R₁)/max(norm(R₁-R₂),r₁ₘ)^3
+        ddR₂ = -ddR₁
+        append!(ddpegnor,ddR₁,ddR₂)
+        return ddpegnor
+    end
+    
+    Integrator=[]
+    for i ∈ 1:N₁ₛ
+        append!(v₁[i],V₁,V₂)
+        append!(r₁[i],R₁,R₂)
+    end
+    for i ∈ 1:N₂ₛ
+        append!(v₂[i],V₁,V₂)
+        append!(r₂[i],R₁,R₂)
+    end
+    
+    for k ∈ 1:N₁ₛ
+        push!(Integrator,init(SecondOrderODEProblem(Gravitus,v₁[k],r₁[k],(0,N_steps*dT),M),dt=dT,McAte2()))
+    end
+    
+    for i ∈ 1:N₂ₛ
+        push!(Integrator,init(SecondOrderODEProblem(Gravitus,v₂[i],r₂[i],(0,N_steps*dT),M),dt=dT,McAte2()))
+    end 
+    snapshot = zeros(frames,N₁ₛ+N₂ₛ+2,3)
+    time = zeros(frames)
+        for i ∈ 1:frames
+            for j ∈ 1:N₁ₛ
+                snapshot[i,j,:] =Integrator[j].u[10:12]*3.240779289444365e-20
+            end
+            for j ∈ 1:N₂ₛ
+                snapshot[i,N₁ₛ+j,:] =Integrator[N₁ₛ+j].u[10:12]*3.240779289444365e-20
+            end
+            snapshot[i,N₁ₛ+N₂ₛ+1,:] = Integrator[1].u[13:15]*3.240779289444365e-20
+            snapshot[i,N₁ₛ+N₂ₛ+2,:] = Integrator[1].u[16:18]*3.240779289444365e-20
+            time[i]=Integrator[1].t * ustrip(u"Myr",1u"s")
+            for j ∈ 1:divs
+                step!.(Integrator)
+            end
+        end
+    return snapshot,time 
 end
