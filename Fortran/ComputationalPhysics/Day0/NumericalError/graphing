@@ -1,0 +1,4 @@
+plot -sin(x) with line title "Exact", "derivadas.dat" u 1:2 title "Advanced", "derivadas.dat" u 1:3 title "Centered"
+plot -cos(x) with line title "Exact", "derivadas.dat" u 1:4 title "Centered"
+plot "errores.dat" u 1:2, "errores.dat" u 1:3, "errores.dat" u 1:4
+plot "error.dat" u 1:2, "error.dat" u 1:3, "error.dat" u 1:4
