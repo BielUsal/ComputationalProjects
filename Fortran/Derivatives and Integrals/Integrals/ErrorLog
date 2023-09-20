@@ -1,2 +1,0 @@
-C:\Users\alumno\Documents\Fortran\Derivatives and Integrals\Integrals\Integral.FOR(12) : error 400 - INTGL10 has both been called and been used in the left hand side of an assignment
-C:\Users\alumno\Documents\Fortran\Derivatives and Integrals\Integrals\Integral.FOR(12) : error 963 - INTGL10 has been used as a scalar variable and now as a function call or array reference
