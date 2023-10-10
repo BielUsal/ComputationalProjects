@@ -1,7 +1,7 @@
       !-----------------------------------------------------------------
       !By 
       !Gabriel D'Andrade Furlanetto XDD204950
-      !Alvaro Gamarra Ralero
+      !Alvaro Gamarra Ralero 04231602Q
       !-----------------------------------------------------------------
       !-----------------------------------------------------------------
       !Typing and initializations. Nothing very interesting other than parameters
@@ -27,7 +27,7 @@
       do i =1,N
         read(15,*) v(i)
       enddo
-      avg = average(v,Ncor)!We need the average to get the PSD, so we have a little function fetch that for us
+      avg = average(v,N)!We need the average to get the PSD, so we have a little function fetch that for us
       call Fourier(v,Freq,avg) !This subroutine does the Fourier transform and returns us 
 c     the (squared) amplitude, which for this problem corresponds to the PSD
       do i = 1,Npf
