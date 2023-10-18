@@ -116,35 +116,6 @@ begin
 	hline!(EBound,label="")
 end
 
-# ╔═╡ 8b26a7d0-ad7b-47bd-b2f3-e60a909081de
-# ╠═╡ disabled = true
-#=╠═╡
-begin
-	Getn =  @bind n Slider(1:size(EBound)[1])
-	md"""
-Choose the which solution to plot $$n=$$ $Getn
- """
-end
-  ╠═╡ =#
-
-# ╔═╡ 9bbc21e6-afbb-4082-a5bb-195d0bfd7c62
-#=╠═╡
-begin
-	@show n
-	function Ψ(x,eigen,N=N)
-		sum=0
-		#eigen = eigen/norm(eigen)
-		for i = 1:N
-			sum = sum + eigen[i]*ψ(x,i)
-		end
-		return sum
-	end
-	prob(x) = 100*Ψ(x,c[n,:])^2
-	plot(V,0,b,label="")
-	plot!(prob,0,b,label="")
-end 
-  ╠═╡ =#
-
 # ╔═╡ e4ac8c79-6aa9-4559-a09b-d61d0406a862
 mod(6,3)
 

@@ -1,0 +1,40 @@
+ IMPUREZAS=    1
+ PLASMONES=    0
+ n§ DE VALLES=    3
+ OPTICO POLAR=    1
+ OPTICO NO POLAR=    1
+ ACUSTICO=    1
+ ALEACION=    0
+ PIEZOELECTRICO=    1
+ DISLOCACIONES=    0
+ AUTOSCATTERING=    1
+ EXCLUSION=    0
+ APANTALLAMIENTO=    0
+      INTERVALO DE TIEMPO=0.10E-13  n§ DE INTERVALOS= 1000000  T(K)=300.0
+D.IMPUREZAS=    0.2(1.0E22 m-3)  D.DISLOC=0.00E+00 m-2
+
+CAMPO= 0.000E+00, 0.000E+00, 0.000E+00
+
+   183535 78.9%        0  0.0%        0  0.0%
+        0  0.0%        1  0.0%        0  0.0%        0  0.0%
+        0  0.0%        1  0.0%        0  0.0%        0  0.0%        0  0.0%        0  0.0%
+        0  0.0%        0  0.0%        0  0.0%        0  0.0%        0  0.0%        0  0.0%
+    22237  9.6%    22236  9.6%        0  0.0%        0  0.0%     4620  2.0%
+        0  0.0%        0  0.0%        0  0.0%
+
+ISOTROPOS=      4622   ANISOTROPOS=    228008
+
+AUTOSCATTERING=     34936    RECHAZADOS=         0
+
+SUBIDAS:      6195    BAJADAS:      3235    EBAJA=   5
+
+      CAMPO                          VX         VZ         VY         TIEMPO
+ 0.000E+00  0.000E+00  0.000E+00   0.768E+03  0.130E+04  0.387E+04  0.100E+01
+ 0.000E+00  0.000E+00  0.000E+00   -.123E+06  0.183E+06  -.962E+05  0.170E-08
+ 0.000E+00  0.000E+00  0.000E+00   0.000E+00  0.000E+00  0.000E+00  0.000E+00
+
+      CAMPO                          VMX        VMZ        VMY        MNE
+ 0.000E+00  0.000E+00  0.000E+00   0.768E+03  0.130E+04  0.387E+04  0.415E-01
+
+      VTIM(1)    VTIM(2)    VTIM(3)    VTIM
+    0.100E-07  0.170E-16  0.000E+00  0.100E-07
