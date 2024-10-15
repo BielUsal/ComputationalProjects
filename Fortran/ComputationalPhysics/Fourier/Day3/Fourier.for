@@ -34,7 +34,7 @@
       function g(t,alpha)
         implicit none
         real*8 g, t,alpha
-        g=t**2*dexp(-alpha*abs(t))
+        g=sin(t)
       end
 
       subroutine Fourier(x,Re,Im,Freq)
